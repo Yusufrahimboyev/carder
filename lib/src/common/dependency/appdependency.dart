@@ -1,0 +1,3 @@
+class AppDependency {
+  AppDependency();
+}
