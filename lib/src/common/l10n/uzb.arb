@@ -1,0 +1,16 @@
+{
+    "@@locale": "uz",
+    "karta_raqami": "Karta raqami",
+    "ismi_va_familiyasi": "Ismi va Familiyasi",
+    "amal_qilish_muddati": "Amal qilish muddati",
+    "cvv": "CVV",
+    "kamera_orqali_skanerlash": "Kamera orqali skanerlash",
+    "shu_yerdan_yozish": "Shu yerdan yozish",
+    "qayta_tekshiring": "Qayta tekshiring",
+    "kiriting": "Kiriting",
+    "amal_qilish_muddati_mm_yy": "Amal qilish muddati (MM/YY)",
+    "Kartani_qurilmaga_yaqinlashtiring": "Kartani qurilmaga yaqinlashtiring",
+    "Humo_yoki_Uzcard_kartangizni_telefoningizning_orqa_tomoniga_yaqinlashtiring": "Humo yoki Uzcard kartangizni telefoningizning orqa tomoniga yaqinlashtiring",
+    "skanerlash_xato_berdi": "Skanerlash xato berdi",
+    
+}

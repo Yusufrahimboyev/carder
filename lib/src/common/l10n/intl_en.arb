@@ -1,0 +1,20 @@
+{
+  "@@locale": "en",
+  "karta_raqami": "Card number",
+  "ismi_va_familiyasi": "Name and Surname",
+  "amal_qilish_muddati": "Expiration date",
+  "cvv": "CVV",
+  "kamera_orqali_skanerlash": "Scan camera",
+  "shu_yerdan_yozish": "Write from here",
+  "qayta_tekshiring": "Check again",
+  "kiriting": "Enter",
+  "amal_qilish_muddati_mm_yy": "Expiration date (MM/YY)",
+  "Kartani_qurilmaga_yaqinlashtiring": "Bring the card close to the device",
+  "Humo_yoki_Uzcard_kartangizni_telefoningizning_orqa_tomoniga_yaqinlashtiring": "Bring your Humo or Uzcard to the back of your phone",
+  "skanerlash_xato_berdi": "Scan error",
+  "nfc_bilan_skanerlash": "NFC Scan",
+  "kamera_scan": "Scan camera",
+  "ism_familya": "Name",
+  "saqlash": "Save",
+  "Cardscanner":"Card Scanner"
+}

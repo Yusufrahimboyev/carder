@@ -6,6 +6,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSCameraUsageDescription</key>
+<string>Karta ma'lumotlarini skanerlash uchun kameraga ruxsat kerak.</string>
 	<key>CFBundleDisplayName</key>
 	<string>Carder</string>
 	<key>CFBundleExecutable</key>

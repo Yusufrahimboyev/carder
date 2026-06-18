@@ -1,0 +1,15 @@
+{
+  "@@locale": "ru",
+  "karta_raqami": "Номер карты",
+  "ismi_va_familiyasi": "Имя и Фамилия",
+  "amal_qilish_muddati": "Срок действия",
+  "cvv": "CVV",
+  "kamera_orqali_skanerlash": "Сканировать через камеру",
+  "shu_yerdan_yozish": "Ввести вручную",
+  "qayta_tekshiring": "Проверьте еще раз",
+  "kiriting": "Ввести",
+  "amal_qilish_muddati_mm_yy": "Срок действия (ММ/ГГ)",
+  "Kartani_qurilmaga_yaqinlashtiring": "Поднесите карту к устройству",
+  "Humo_yoki_Uzcard_kartangizni_telefoningizning_orqa_tomoniga_yaqinlashtiring": "Поднесите вашу карту Humo или Uzcard к задней панели телефона",
+  "skanerlash_xato_berdi": "Ошибка сканирования"
+}
