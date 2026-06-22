@@ -1,3 +1,8 @@
+
+import 'package:shared_preferences/shared_preferences.dart';
+
 class AppDependency {
-  AppDependency();
+  final SharedPreferences shp;
+
+  AppDependency( this.shp);
 }

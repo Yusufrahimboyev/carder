@@ -9,6 +9,8 @@
 	<key>NSCameraUsageDescription</key>
 <string>Karta ma'lumotlarini skanerlash uchun kameraga ruxsat kerak.</string>
 	<key>CFBundleDisplayName</key>
+	<key>NFCReaderUsageDescription</key>
+    <string>App needs access to NFC in order for you to write and read tags</string>
 	<string>Carder</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>

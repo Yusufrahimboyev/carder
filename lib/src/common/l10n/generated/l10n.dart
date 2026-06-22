@@ -89,20 +89,20 @@ class S {
     return Intl.message('CVV', name: 'cvv', desc: '', args: []);
   }
 
-  /// `Scan camera`
+  /// `Scan via camera`
   String get kamera_orqali_skanerlash {
     return Intl.message(
-      'Scan camera',
+      'Scan via camera',
       name: 'kamera_orqali_skanerlash',
       desc: '',
       args: [],
     );
   }
 
-  /// `Write from here`
+  /// `Enter manually`
   String get shu_yerdan_yozish {
     return Intl.message(
-      'Write from here',
+      'Enter manually',
       name: 'shu_yerdan_yozish',
       desc: '',
       args: [],
@@ -176,14 +176,24 @@ class S {
     );
   }
 
-  /// `Scan camera`
+  /// `Scan via camera`
   String get kamera_scan {
-    return Intl.message('Scan camera', name: 'kamera_scan', desc: '', args: []);
+    return Intl.message(
+      'Scan via camera',
+      name: 'kamera_scan',
+      desc: '',
+      args: [],
+    );
   }
 
-  /// `Name`
+  /// `Name and Surname`
   String get ism_familya {
-    return Intl.message('Name', name: 'ism_familya', desc: '', args: []);
+    return Intl.message(
+      'Name and Surname',
+      name: 'ism_familya',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Save`
@@ -200,13 +210,92 @@ class S {
       args: [],
     );
   }
+
+  /// `Bring your Humo or Uzcard to the back of your phone`
+  String get humo_uzcard {
+    return Intl.message(
+      'Bring your Humo or Uzcard to the back of your phone',
+      name: 'humo_uzcard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NFC is not supported or is disabled on this device!`
+  String get notsupport {
+    return Intl.message(
+      'NFC is not supported or is disabled on this device!',
+      name: 'notsupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reading card...`
+  String get karta_oqilmoqda {
+    return Intl.message(
+      'Reading card...',
+      name: 'karta_oqilmoqda',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NFC Card detected`
+  String get karta_topildi {
+    return Intl.message(
+      'NFC Card detected',
+      name: 'karta_topildi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Card read successfully!`
+  String get muvaffaqiyatli_oqildi {
+    return Intl.message(
+      'Card read successfully!',
+      name: 'muvaffaqiyatli_oqildi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred`
+  String get xatolik_yuz {
+    return Intl.message(
+      'An error occurred',
+      name: 'xatolik_yuz',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bring the card close to the device`
+  String get kartani_yaqin {
+    return Intl.message(
+      'Bring the card close to the device',
+      name: 'kartani_yaqin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get bekor {
+    return Intl.message('Cancel', name: 'bekor', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[Locale.fromSubtags(languageCode: 'en')];
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'ru'),
+      Locale.fromSubtags(languageCode: 'uz'),
+    ];
   }
 
   @override

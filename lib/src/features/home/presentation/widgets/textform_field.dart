@@ -4,16 +4,22 @@ import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class AppTextFormField extends StatefulWidget {
-  const AppTextFormField({super.key});
+  final TextEditingController cardNumberController;
+  final TextEditingController expiryDateController;
+  final TextEditingController cardholderController;
+
+  const AppTextFormField({
+    super.key,
+    required this.cardNumberController,
+    required this.expiryDateController,
+    required this.cardholderController,
+  });
 
   @override
   State<AppTextFormField> createState() => _AppTextFormFieldState();
 }
 
 class _AppTextFormFieldState extends State<AppTextFormField> {
-  late final TextEditingController cardNumberController;
-  late final TextEditingController expiryDateController;
-  late final TextEditingController cardholderController;
   final _cardNumberFormatter = MaskTextInputFormatter(
     filter: {'#': RegExp(r'[0-9]')},
     mask: '#### #### #### ####',
@@ -24,26 +30,11 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
   );
 
   @override
-  void initState() {
-    super.initState();
-    cardNumberController = TextEditingController();
-    expiryDateController = TextEditingController();
-    cardholderController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    cardNumberController.dispose();
-    expiryDateController.dispose();
-    cardholderController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TextFormField(
+          controller: widget.cardNumberController, // ← QO'SHILDI
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             LengthLimitingTextInputFormatter(16),
@@ -58,8 +49,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         TextFormField(
+          controller: widget.expiryDateController, // ← QO'SHILDI
           inputFormatters: [
             _expiryDateFormatter,
             LengthLimitingTextInputFormatter(5),
@@ -73,11 +65,12 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         TextFormField(
+          controller: widget.cardholderController, // ← QO'SHILDI
           inputFormatters: [
-            LengthLimitingTextInputFormatter(40),
-            FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
+            LengthLimitingTextInputFormatter(26),
+            FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z ']")),
           ],
           keyboardType: TextInputType.name,
           decoration: InputDecoration(

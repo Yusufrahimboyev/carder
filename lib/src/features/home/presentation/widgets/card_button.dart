@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 class CardButton extends StatefulWidget {
   final String iconPath;
   final String label;
-  final Function onTap;
+  final VoidCallback onTap;
   const CardButton({
     super.key,
     required this.iconPath,
@@ -21,7 +21,7 @@ class _CardButtonState extends State<CardButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.onTap(),
+      onTap: widget.onTap,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: context.colorScheme.secondary.withValues(alpha: 0.1),
@@ -32,7 +32,11 @@ class _CardButtonState extends State<CardButton> {
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
           child: SizedBox(
             width: 100,
+            height: 80,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
                   widget.iconPath,

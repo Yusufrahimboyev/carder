@@ -6,15 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomeCard extends StatefulWidget {
-  final List<int> number;
-
-  final String brand;
+  final String number;
   final String date;
   final String name;
   const HomeCard({
     super.key,
     required this.number,
-    required this.brand,
     required this.date,
     required this.name,
   });
@@ -51,36 +48,44 @@ class _HomeCardState extends State<HomeCard> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: switch (widget.brand.toLowerCase().trim()) {
-                    "humo" => Image.asset(
-                      AppIcons.humoLogo,
-                      height: 30,
-                      width: 40,
-                    ),
-
-                    _ => Text(
-                      "Brand",
-                      style: context.textTheme.titleSmall?.copyWith(
-                        color: Colors.white,
-                      ),
-                    ),
-                  },
+                  child: Builder(
+                    builder: (context) {
+                      final digits = widget.number.replaceAll(RegExp(r'\D'), '');
+                      if (digits.startsWith('9860')) {
+                        return Image.asset(AppIcons.humoLogo, height: 30, width: 40);
+                      } else if (digits.startsWith('8600')) {
+                        return Image.asset(AppIcons.uzcardLogo, height: 50, width: 50);
+                      } else if (digits.startsWith('4')) {
+                        return SvgPicture.asset(AppIcons.visa, height: 30, width: 40);
+                      } else if (digits.startsWith(RegExp(r'5[1-5]')) ||
+                          digits.startsWith(RegExp(r'2[2-7]'))) {
+                        return SvgPicture.asset(AppIcons.mastercard
+                            , height: 30, width: 40);
+                      } else {
+                        return Text(
+                          "Brand",
+                          style: context.textTheme.titleSmall?.copyWith(color: Colors.white),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Wrap(
                 spacing: 1,
                 runSpacing: 1,
-                children: List.generate(
-                  16,
-                  (index) => CircleWidget(
-                    color: context.colorScheme.onPrimary,
-                    number: widget.number,
-                  ),
-                ),
+                  children: List.generate(16, (index) {
+                final digits = widget.number.replaceAll(RegExp(r'\D'), '');
+                final hasDigit = index < digits.length;
+                return CircleWidget(
+                  color: context.colorScheme.onPrimary,
+                  number: hasDigit ? int.parse(digits[index]) : null,
+                );
+              }),
               ),
             ),
             const SizedBox(height: 32),
@@ -90,7 +95,7 @@ class _HomeCardState extends State<HomeCard> {
                 Text(
                   widget.name.isNotEmpty
                       ? widget.name.toUpperCase()
-                      : "ISM FAMILYA",
+                      : context.localizations.ism_familya,
                   style: context.textTheme.titleMedium?.copyWith(
                     color: context.colorScheme.onPrimary,
                   ),

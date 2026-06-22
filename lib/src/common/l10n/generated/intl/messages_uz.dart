@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en locale. All the
+// This is a library that provides messages for a uz locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,55 +18,67 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en';
+  String get localeName => 'uz';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "Cardscanner": MessageLookupByLibrary.simpleMessage("Card Scanner"),
+    "Cardscanner": MessageLookupByLibrary.simpleMessage("Karta skaneri"),
     "Humo_yoki_Uzcard_kartangizni_telefoningizning_orqa_tomoniga_yaqinlashtiring":
         MessageLookupByLibrary.simpleMessage(
-          "Bring your Humo or Uzcard to the back of your phone",
+          "Humo yoki Uzcard kartangizni telefoningizning orqa tomoniga yaqinlashtiring",
         ),
     "Kartani_qurilmaga_yaqinlashtiring": MessageLookupByLibrary.simpleMessage(
-      "Bring the card close to the device",
+      "Kartani qurilmaga yaqinlashtiring",
     ),
     "amal_qilish_muddati": MessageLookupByLibrary.simpleMessage(
-      "Expiration date",
+      "Amal qilish modi",
     ),
     "amal_qilish_muddati_mm_yy": MessageLookupByLibrary.simpleMessage(
-      "Expiration date (MM/YY)",
+      "Amal qilish muddati (MM/YY)",
     ),
-    "bekor": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "bekor": MessageLookupByLibrary.simpleMessage("Bekor qilish"),
     "cvv": MessageLookupByLibrary.simpleMessage("CVV"),
     "humo_uzcard": MessageLookupByLibrary.simpleMessage(
-      "Bring your Humo or Uzcard to the back of your phone",
+      "Humo yoki Uzcard kartangizni telefoningizning orqa tomoniga yaqinlashtiring",
     ),
-    "ism_familya": MessageLookupByLibrary.simpleMessage("Name and Surname"),
+    "ism_familya": MessageLookupByLibrary.simpleMessage("Ism Familiya"),
     "ismi_va_familiyasi": MessageLookupByLibrary.simpleMessage(
-      "Name and Surname",
+      "Ismi va Familiyasi",
     ),
     "kamera_orqali_skanerlash": MessageLookupByLibrary.simpleMessage(
-      "Scan via camera",
+      "Kamera orqali skanerlash",
     ),
-    "kamera_scan": MessageLookupByLibrary.simpleMessage("Scan via camera"),
-    "karta_oqilmoqda": MessageLookupByLibrary.simpleMessage("Reading card..."),
-    "karta_raqami": MessageLookupByLibrary.simpleMessage("Card number"),
-    "karta_topildi": MessageLookupByLibrary.simpleMessage("NFC Card detected"),
+    "kamera_scan": MessageLookupByLibrary.simpleMessage(
+      "Kamera orqali skanerlash",
+    ),
+    "karta_oqilmoqda": MessageLookupByLibrary.simpleMessage(
+      "Karta o\'qilmoqda...",
+    ),
+    "karta_raqami": MessageLookupByLibrary.simpleMessage("Karta raqami"),
+    "karta_topildi": MessageLookupByLibrary.simpleMessage("NFC Karta topildi"),
     "kartani_yaqin": MessageLookupByLibrary.simpleMessage(
-      "Bring the card close to the device",
+      "Kartani qurilmaga yaqinlashtiring",
     ),
-    "kiriting": MessageLookupByLibrary.simpleMessage("Enter"),
+    "kiriting": MessageLookupByLibrary.simpleMessage("Kiriting"),
     "muvaffaqiyatli_oqildi": MessageLookupByLibrary.simpleMessage(
-      "Card read successfully!",
+      "Karta muvaffaqiyatli o\'qildi!",
     ),
-    "nfc_bilan_skanerlash": MessageLookupByLibrary.simpleMessage("NFC Scan"),
+    "nfc_bilan_skanerlash": MessageLookupByLibrary.simpleMessage(
+      "NFC bilan skanerlash",
+    ),
     "notsupport": MessageLookupByLibrary.simpleMessage(
-      "NFC is not supported or is disabled on this device!",
+      "Qurilmada NFC qo\'llab-quvvatlanmaydi yoki ochiq emas!",
     ),
-    "qayta_tekshiring": MessageLookupByLibrary.simpleMessage("Check again"),
-    "saqlash": MessageLookupByLibrary.simpleMessage("Save"),
-    "shu_yerdan_yozish": MessageLookupByLibrary.simpleMessage("Enter manually"),
-    "skanerlash_xato_berdi": MessageLookupByLibrary.simpleMessage("Scan error"),
-    "xatolik_yuz": MessageLookupByLibrary.simpleMessage("An error occurred"),
+    "qayta_tekshiring": MessageLookupByLibrary.simpleMessage(
+      "Qayta tekshiring",
+    ),
+    "saqlash": MessageLookupByLibrary.simpleMessage("Saqlash"),
+    "shu_yerdan_yozish": MessageLookupByLibrary.simpleMessage(
+      "Shu yerdan yozish",
+    ),
+    "skanerlash_xato_berdi": MessageLookupByLibrary.simpleMessage(
+      "Skanerlash xato berdi",
+    ),
+    "xatolik_yuz": MessageLookupByLibrary.simpleMessage("Xatolik yuz berdi"),
   };
 }

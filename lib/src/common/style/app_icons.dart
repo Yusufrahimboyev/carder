@@ -7,4 +7,6 @@ class AppIcons {
   static const String nfcan = "$_path/NFCAnimationArea.svg";
   static const String humo = "$_path/humo.jpg";
   static const String uzcard = "$_path/uzcard.jpg";
+  static const String visa="$_path/visa.jpg";
+  static const String mastercard="$_path/mastercard.jpg";
 }

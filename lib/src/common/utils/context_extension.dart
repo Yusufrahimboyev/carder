@@ -4,6 +4,7 @@ import 'package:carder/src/common/l10n/generated/l10n.dart';
 import 'package:carder/src/common/widgets/app_scope.dart';
 import 'package:flutter/material.dart';
 
+
 extension ContextExtension on BuildContext {
   AppDependency get dependencies =>
       findAncestorStateOfType<AppScopeState>()!.dependency;
@@ -12,4 +13,5 @@ extension ContextExtension on BuildContext {
   S get localizations => S.of(this);
   AppDependency get dependency =>
       findAncestorStateOfType<AppScopeState>()!.dependency;
+
 }
