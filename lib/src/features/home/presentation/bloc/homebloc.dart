@@ -2,8 +2,6 @@ import 'package:card_scanner/card_scanner.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carder/src/features/home/data/home_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../common/utils/status_enum.dart';
 
 part 'home_event.dart';
@@ -12,10 +10,8 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeRepository repository;
-  final SharedPreferences _shp;
 
-  HomeBloc({required this.repository, required this._shp})
-    : super(const HomeState()) {
+  HomeBloc({required this.repository}) : super(const HomeState()) {
     on<SaveCardEvent>(_onSave);
     on<LoadCardEvent>(_onLoad);
     on<ScanCardEvent>(_onScan);
@@ -24,7 +20,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onSave(SaveCardEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(status: Status.loading));
-
     try {
       await repository.saveData(
         cardNumber: event.cardNumber,

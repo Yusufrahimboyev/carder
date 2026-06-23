@@ -1,7 +1,4 @@
-import 'package:card_scanner/card_scanner.dart';
-
 import 'package:carder/src/common/constants/app_icons.dart';
-
 import 'package:carder/src/common/utils/context_extension.dart';
 import 'package:carder/src/features/home/presentation/bloc/homebloc.dart';
 import 'package:carder/src/features/home/presentation/widgets/card_button.dart';
@@ -20,17 +17,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final cardNumberController = TextEditingController();
-  final expiryDateController = TextEditingController();
-  final cardholderController = TextEditingController();
+  late final TextEditingController cardNumberController;
+  late final TextEditingController expiryDateController;
+  late final TextEditingController cardholderController;
+  final formKey = GlobalKey<FormState>();
 
-  CardScanOptions scanOptions = CardScanOptions(
-    scanCardHolderName: false,
-    validCardsToScanBeforeFinishingScan: 2,
-    possibleCardHolderNamePositions: [
-      CardHolderNameScanPosition.aboveCardNumber,
-    ],
-  );
+  @override
+  void initState() {
+    super.initState();
+    cardNumberController = TextEditingController();
+    expiryDateController = TextEditingController();
+    cardholderController = TextEditingController();
+  }
+
   @override
   void dispose() {
     cardNumberController.dispose();
@@ -39,18 +38,34 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  // Future<void> scanCard() async {
-  //   try {
-  //     var cardDetails = await CardScanner.scanCard(scanOptions: scanOptions);
-  //
-  //     if (!mounted) return;
-  //     cardNumberController.text = cardDetails?.cardNumber ?? '';
-  //     expiryDateController.text = cardDetails?.expiryDate ?? '';
-  //
-  //   } catch (e) {
-  //     debugPrint('Scanner bug ');
-  //   }
-  // }
+  void customDialog(String str, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              str,
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(context);
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +82,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        child: BlocBuilder<HomeBloc, HomeState>(
+        child: BlocConsumer<HomeBloc, HomeState>(
+          listener: (context, state) {
+            cardNumberController.text = state.cardNumber;
+            expiryDateController.text = state.date;
+          },
+          listenWhen: (prev, curr) =>
+              prev.cardNumber != curr.cardNumber ||
+              prev.date != curr.date ||
+              prev.status != curr.status,
           builder: (context, state) {
             return ListView(
               children: [
@@ -81,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   cardNumberController: cardNumberController,
                   expiryDateController: expiryDateController,
                   cardholderController: cardholderController,
+                  formKey: formKey,
                 ),
                 SizedBox(height: 24),
                 Padding(
@@ -97,7 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           NfcAvailability isAvailable = await NfcManager
                               .instance
                               .checkAvailability();
-                          if (isAvailable == NfcAvailability.enabled) {
+                          if (isAvailable == NfcAvailability.enabled &&
+                              isAvailable != NfcAvailability.unsupported) {
                             if (!context.mounted) return;
                             final result = await showModalBottomSheet(
                               context: context,
@@ -110,41 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) => const MyNfc(),
                             );
                             if (result is Map && context.mounted) {
-                              cardNumberController.text=result['pan'];
-                              expiryDateController.text=result['expiry'];
-                              context.read<HomeBloc>().add(NfcResultEvent(
-                                cardNumber: result['pan'] ?? '',
-                                date: result['expiry'] ?? '',
-                              ));
+                              context.read<HomeBloc>().add(
+                                NfcReadEvent(
+                                  cardNumber: result['pan'] ?? '',
+                                  date: result['expiry'] ?? '',
+                                ),
+                              );
                             }
                           } else {
                             if (!context.mounted) return;
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      context.localizations.notsupport,
-                                      style: context.textTheme.bodyLarge
-                                          ?.copyWith(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                    ),
-                                    SizedBox(height: 20),
-                                    FilledButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("OK"),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            customDialog(
+                              context.localizations.notsupport,
+                              context,
                             );
                           }
                         },
@@ -153,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       CardButton(
                         iconPath: AppIcons.camera,
                         label: context.localizations.kamera_orqali_skanerlash,
-                        onTap: scanCard,
+                        onTap: () {
+                          context.read<HomeBloc>().add(ScanCardEvent());
+                        },
                       ),
                     ],
                   ),
@@ -165,13 +169,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: FilledButton(
                     onPressed: () {
-                      context.read<HomeBloc>().add(
-                        SaveCardEvent(
-                          cardNumber: cardNumberController.text,
-                          name: cardholderController.text,
-                          date: expiryDateController.text,
-                        ),
-                      );
+                      if (formKey.currentState!.validate()) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        context.read<HomeBloc>().add(
+                          SaveCardEvent(
+                            cardNumber: cardNumberController.text,
+                            name: cardholderController.text,
+                            date: expiryDateController.text,
+                          ),
+                        );
+                      } else {
+                        customDialog(
+                          context.localizations.maydonlarni_toldiring,
+                          context,
+                        );
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -192,4 +204,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

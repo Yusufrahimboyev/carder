@@ -60,6 +60,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Kartani qurilmaga yaqinlashtiring",
     ),
     "kiriting": MessageLookupByLibrary.simpleMessage("Kiriting"),
+    "maydonlarni_toldiring": MessageLookupByLibrary.simpleMessage(
+      "Barcha maydonlarni to\'g\'ri to\'ldiring",
+    ),
     "muvaffaqiyatli_oqildi": MessageLookupByLibrary.simpleMessage(
       "Karta muvaffaqiyatli o\'qildi!",
     ),

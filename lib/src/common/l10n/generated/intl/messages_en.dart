@@ -56,6 +56,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bring the card close to the device",
     ),
     "kiriting": MessageLookupByLibrary.simpleMessage("Enter"),
+    "maydonlarni_toldiring": MessageLookupByLibrary.simpleMessage(
+      "Please fill in all fields correctly",
+    ),
     "muvaffaqiyatli_oqildi": MessageLookupByLibrary.simpleMessage(
       "Card read successfully!",
     ),

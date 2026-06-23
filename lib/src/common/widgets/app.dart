@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (context) => HomeBloc(
-          repository: HomeRepositoryImpl(shp: context.dependency.shp), shp: context.dependency.shp,
+          repository: HomeRepositoryImpl(shp: context.dependency.shp),
         )..add(LoadCardEvent()),
         child: HomeScreen(),
       ),

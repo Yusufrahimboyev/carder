@@ -58,6 +58,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Поднесите карту к устройству",
     ),
     "kiriting": MessageLookupByLibrary.simpleMessage("Ввести"),
+    "maydonlarni_toldiring": MessageLookupByLibrary.simpleMessage(
+      "Заполните все поля правильно",
+    ),
     "muvaffaqiyatli_oqildi": MessageLookupByLibrary.simpleMessage(
       "Карта успешно прочитана!",
     ),

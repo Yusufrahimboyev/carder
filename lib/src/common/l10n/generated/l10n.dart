@@ -285,6 +285,16 @@ class S {
   String get bekor {
     return Intl.message('Cancel', name: 'bekor', desc: '', args: []);
   }
+
+  /// `Please fill in all fields correctly`
+  String get maydonlarni_toldiring {
+    return Intl.message(
+      'Please fill in all fields correctly',
+      name: 'maydonlarni_toldiring',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

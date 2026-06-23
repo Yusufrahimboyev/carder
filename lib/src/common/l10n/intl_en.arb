@@ -24,5 +24,6 @@
   "muvaffaqiyatli_oqildi": "Card read successfully!",
   "xatolik_yuz": "An error occurred",
   "kartani_yaqin": "Bring the card close to the device",
-  "bekor": "Cancel"
+  "bekor": "Cancel",
+  "maydonlarni_toldiring": "Please fill in all fields correctly"
 }
