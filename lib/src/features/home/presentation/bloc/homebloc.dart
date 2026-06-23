@@ -32,6 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           cardNumber: event.cardNumber,
           name: event.name,
           date: event.date,
+          fillForm: false,
         ),
       );
     } catch (e) {
@@ -46,6 +47,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         cardNumber: repository.getSavedData().number,
         name: repository.getSavedData().name,
         date: repository.getSavedData().date,
+        fillForm: false,
       ),
     );
   }
@@ -54,17 +56,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       const options = CardScanOptions(
         scanCardHolderName: false,
-        validCardsToScanBeforeFinishingScan: 2,
+        validCardsToScanBeforeFinishingScan: 5,
       );
       final card = await CardScanner.scanCard(scanOptions: options);
       if (card == null) return;
-      emit(state.copyWith(cardNumber: card.cardNumber, date: card.expiryDate));
+      emit(
+        state.copyWith(
+          cardNumber: card.cardNumber,
+          date: card.expiryDate,
+          fillForm: true,
+        ),
+      );
     } catch (_) {
       emit(state.copyWith(status: Status.error));
     }
   }
 
   void _onNfcRead(NfcReadEvent event, Emitter<HomeState> emit) {
-    state.copyWith(cardNumber: state.cardNumber, date: state.date);
+    emit(
+      state.copyWith(
+        cardNumber: event.cardNumber,
+        date: event.date,
+        fillForm: true,
+      ),
+    );
   }
 }

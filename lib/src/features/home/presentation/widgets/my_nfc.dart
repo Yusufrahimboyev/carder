@@ -40,14 +40,12 @@ class _MyNfcState extends State<MyNfc> {
               statusMessage = context.localizations.karta_oqilmoqda;
             });
           }
-
           final iso = IsoDepAndroid.from(tag);
           if (iso == null) {
             await NfcManager.instance.stopSession();
             if (mounted) Navigator.pop(context);
             return;
           }
-
           var resp = await iso.transceive(
             Uint8List.fromList([
               0x00,
@@ -110,22 +108,17 @@ class _MyNfcState extends State<MyNfc> {
                     read[read.length - 2] == 0x90 &&
                     read[read.length - 1] == 0x00) {
                   debugPrint("📄 SFI$sfi REC$rec: ${_hex(read)}");
-
-                  // PAN (tag 5A)
                   final panB = _findTag(read, [0x5A]);
                   if (panB != null && pan == null) {
                     pan = _bcdToString(panB);
                     debugPrint("💳 PAN: $pan");
                   }
-
-                  // Amal muddati (tag 5F24)
                   final expB = _findTag(read, [0x5F, 0x24]);
                   if (expB != null && expB.length >= 2 && expiry == null) {
                     expiry = "${_bcd(expB[1])}/${_bcd(expB[0])}";
                     debugPrint("📅 MUDDAT: $expiry");
                   }
 
-                  // Karta egasi ismi (tag 5F20)
                   final nameB = _findTag(read, [0x5F, 0x20]);
                   if (nameB != null && holderName == null) {
                     holderName = _asciiToString(nameB);
@@ -135,7 +128,6 @@ class _MyNfcState extends State<MyNfc> {
               } catch (_) {}
             }
           }
-
           await NfcManager.instance.stopSession();
 
           if (pan != null) {
@@ -161,7 +153,12 @@ class _MyNfcState extends State<MyNfc> {
           await NfcManager.instance.stopSession().catchError((_) {});
           if (mounted) {
             setState(() {
-              statusMessage = "Xatolik: $e";
+
+              if (e.toString().contains('TagLost')) {
+                statusMessage = "Kartani uzoqroq ushlab turing";
+              } else {
+                statusMessage = "Xatolik yuz berdi, qayta urining";
+              }
               isProcessing = false;
             });
           }
@@ -170,7 +167,6 @@ class _MyNfcState extends State<MyNfc> {
     );
   }
 
-  // === Yordamchilar ===
   String _hex(Uint8List d) =>
       d.map((e) => e.toRadixString(16).padLeft(2, '0')).join(' ');
 
@@ -181,7 +177,6 @@ class _MyNfcState extends State<MyNfc> {
       .join()
       .replaceAll(RegExp(r'[fF]'), '');
 
-  // ASCII matn (ism uchun) — '/' ni bo'sh joyga almashtiradi
   String _asciiToString(Uint8List d) =>
       String.fromCharCodes(d).replaceAll('/', ' ').trim();
 
@@ -210,68 +205,76 @@ class _MyNfcState extends State<MyNfc> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.only(
+        left: 24,
+        right: 24,
+        top: 24,
+
+        bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 40,
-            height: 4,
-            margin: const EdgeInsets.only(bottom: 20),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          const SizedBox(height: 20),
-          SvgPicture.asset(AppIcons.nfcAnimationArea),
-          const SizedBox(height: 30),
-          Text(
-            context.localizations.kartani_yaqin,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              statusMessage,
-              style: context.textTheme.bodyMedium?.copyWith(
-                color: Colors.grey,
-                fontSize: 14,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(2),
               ),
+            ),
+            const SizedBox(height: 20),
+            SvgPicture.asset(AppIcons.nfcAnimationArea),
+            const SizedBox(height: 30),
+            Text(
+              context.localizations.kartani_yaqin,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-          ),
-          const SizedBox(height: 30),
-          if (isProcessing)
-            const CircularProgressIndicator()
-          else
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200],
-                  foregroundColor: Colors.black,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                statusMessage,
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey,
+                  fontSize: 14,
                 ),
-                onPressed: () async {
-                  await NfcManager.instance.stopSession().catchError((_) {});
-                  if (context.mounted) Navigator.pop(context);
-                },
-                child: Text(context.localizations.bekor),
+                textAlign: TextAlign.center,
               ),
             ),
-          const SizedBox(height: 10),
-        ],
+            const SizedBox(height: 30),
+            if (isProcessing)
+              const CircularProgressIndicator()
+            else
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    foregroundColor: Colors.black,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () async {
+                    await NfcManager.instance.stopSession().catchError((_) {});
+                    if (context.mounted) Navigator.pop(context);
+                  },
+                  child: Text(context.localizations.bekor),
+                ),
+              ),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

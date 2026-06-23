@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
+import '../../../../common/utils/status_enum.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -84,8 +86,17 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         child: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
-            cardNumberController.text = state.cardNumber;
-            expiryDateController.text = state.date;
+            if (state.status == Status.success && !state.fillForm) {
+              cardNumberController.clear();
+              expiryDateController.clear();
+              cardholderController.clear();
+              return;
+            }
+
+            if (state.fillForm) {
+              cardNumberController.text = state.cardNumber;
+              expiryDateController.text = state.date;
+            }
           },
           listenWhen: (prev, curr) =>
               prev.cardNumber != curr.cardNumber ||
@@ -112,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                     children: [
                       CardButton(
                         iconPath: AppIcons.cardNfc,
